@@ -56,7 +56,7 @@ body {
 
 .turn {
   /* background-color: var(--light-gray); */
-  color: var(--yellow);
+  /* color: var(--yellow); */
 
   grid-column: 1 / span 2;
   align-self: center;
