@@ -20,34 +20,34 @@
     <main>
       <div class="grid" data-id="grid">
         <!-- TURN INDICATOR CODE -->
-        <div class="turn" data-id="turn">
-          <i class="fa-solid fa-x turquoise"></i>
+        <div class="turn yellow" data-id="turn">
+          <i class="fa-solid fa-x"></i>
           <p>Player 1, you're up!</p>
         </div>
 
         <!-- DROPDOWN MENU CODE -->
-        <div class="menu">
+        <div class="menu" data-id="menu">
           <button class="menu-btn">
             Actions
             <i class="fa-solid fa-chevron-down"></i>
           </button>
 
-          <div class="items border hidden">
-            <button class="reset-btn">Reset</button>
-            <button class="new-round-btn">New Round</button>
+          <div class="items border hidden" data-id="menu-items">
+            <button data-id="rst-btn">Reset</button>
+            <button data-id="new-round-btn">New Round</button>
           </div>
         </div>
 
         <!-- GAME BOARD CODE -->
-        <div id="1" class="square shadow"></div>
-        <div id="2" class="square shadow"></div>
-        <div id="3" class="square shadow"></div>
-        <div id="4" class="square shadow"></div>
-        <div id="5" class="square shadow"></div>
-        <div id="6" class="square shadow"></div>
-        <div id="7" class="square shadow"></div>
-        <div id="8" class="square shadow"></div>
-        <div id="9" class="square shadow"></div>
+        <div id="1" class="square shadow" data-id="square"></div>
+        <div id="2" class="square shadow" data-id="square"></div>
+        <div id="3" class="square shadow" data-id="square"></div>
+        <div id="4" class="square shadow" data-id="square"></div>
+        <div id="5" class="square shadow" data-id="square"></div>
+        <div id="6" class="square shadow" data-id="square"></div>
+        <div id="7" class="square shadow" data-id="square"></div>
+        <div id="8" class="square shadow" data-id="square"></div>
+        <div id="9" class="square shadow" data-id="square"></div>
 
         <!-- SCORE BAR CODE -->
         <div class="score shadow" style="background-color: var(--turquoise)">
@@ -59,8 +59,9 @@
           <span data-id="ties">0</span>
         </div>
         <div class="score shadow" style="background-color: var(--yellow)">
-        <p>Player 2</p>
-        <span data-id="player2-stats">0 Wins</span>
+          <p>Player 2</p>
+          <span data-id="player2-stats">0 Wins</span>
+        </div>
       </div>
     </main>
 
@@ -81,11 +82,14 @@
     </footer>
 
     <!-- MODAL NOTIFICATION GAME ENDS -->
-    <div class="modal hidden">
+    <div class="modal hidden" data-id="modal">
       <div class="modal-contents">
-        <p>Player 1 wins!</p>
-        <button>Play again</button>
+        <p data-id="modal-txt">Player 1 wins!</p>
+        <button data-id="btn-modal">Play again</button>
       </div>
     </div>
+
+    <!-- SCRIPTS INTANCES BELOW: -->
+    <script src="app.js"></script>
   </body>
 </html>
