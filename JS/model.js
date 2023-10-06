@@ -6,8 +6,11 @@ const initialValue = {
   },
 };
 
-export default class Model {
+// "extends eventtarget" = fa que la classe model tingui integrat un eventListener,
+// per no cridar sempre al render() i que s'executi automaticament desde un event
+export default class Model extends EventTarget {
   constructor(key, players) {
+    super(); //per implementar el "extends eventsTarget"
     this.liveKey = key;
     this.players = players;
   }
@@ -105,6 +108,16 @@ export default class Model {
     this.#saveState(stateClone);
   }
 
+  newRound() {
+    this.resetGame();
+
+    const stateClone = structuredClone(this.#getState());
+    stateClone.history.allGames.push(...stateClone.history.currentRoundGames);
+    stateClone.history.currentRoundGames = [];
+
+    this.#saveState(stateClone);
+  }
+
   #getState() {
     // return this.#state;
     const item = window.localStorage.getItem(this.liveKey);
@@ -131,5 +144,7 @@ export default class Model {
 
     // this.#state = newState;
     window.localStorage.setItem(this.liveKey, JSON.stringify(newState));
+
+    this.dispatchEvent(new Event("stateChange"));
   }
 }

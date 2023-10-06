@@ -22,36 +22,50 @@ function init() {
   const view = new View();
   const model = new Model("live-game-key", players);
 
-  function initView() {
-    view.closeAll();
-    view.clearBoardGame();
-    view.setTurnIndicator(model.game.currPlayer);
-    view.updateScoreboard(
-      model.stats.playerWithStats[0].wins,
-      model.stats.playerWithStats[1].wins,
-      model.stats.ties
-    );
-    view.initializeMoves(model.game.moves);
-  }
+  // ARA INTEGRAT AL RENDER DE VIEW
+  // function initView() {
+  //   view.closeAll();
+  //   view.clearBoardGame();
+  //   view.setTurnIndicator(model.game.currPlayer);
+  //   view.updateScoreboard(
+  //     model.stats.playerWithStats[0].wins,
+  //     model.stats.playerWithStats[1].wins,
+  //     model.stats.ties
+  //   );
+  //   view.initializeMoves(model.game.moves);
+  // }
 
   // listener per sincronitzar entre diferents browser tabs
+
+  //When current tab state changes:
+  model.addEventListener("stateChange", () => {
+    view.render(model.game, model.stats);
+  });
+
+  // When different tab state changes:
   window.addEventListener("storage", () => {
     console.log("state changed from another tab");
-    initView();
+    // initView();     // ARA INTEGRAT AL RENDER DE VIEW
+
+    view.render(model.game, model.stats);
   });
 
   model.game;
 
-  initView();
+  // The first load of the document:
+  view.render(model.game, model.stats);
+  // initView();     // ARA INTEGRAT AL RENDER DE VIEW
 
   view.gameResetEvent((event) => {
     model.resetGame();
-    initView();
+    // initView();    // ARA INTEGRAT AL RENDER DE VIEW
+    // view.render(model.game, model.stats); //ARA LISTENER
   });
 
   view.newRoundEvent((event) => {
-    model.newRoundEvent();
-    initView();
+    model.newRound();
+    // initView();    // ARA INTEGRAT AL RENDER DE VIEW
+    // view.render(model.game, model.stats); //ARA LISTENER
   });
 
   view.playerMoveEvent((square) => {
@@ -63,23 +77,28 @@ function init() {
 
     if (existingMove) return;
 
+    // ARA INTEGRAT AL RENDER DE VIEW
     // Place an icon into the game square
-    view.handlePlayerMove(square, model.game.currPlayer);
+    // view.handlePlayerMove(square, model.game.currPlayer);
+
     // Update to the next state by pushing a new move to the moves array
     model.playerMove(+square.id);
 
-    if (model.game.status.isComplete) {
-      view.openModal(
-        model.game.status.winner
-          ? `${model.game.status.winner.name} wins!`
-          : "It is a Tie!"
-      );
+    // ARA INTEGRAT AL RENDER DE VIEW
+    // if (model.game.status.isComplete) {
+    //   view.openModal(
+    //     model.game.status.winner
+    //       ? `${model.game.status.winner.name} wins!`
+    //       : "It is a Tie!"
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
-    // Set the next player's turn indicator
-    view.setTurnIndicator(model.game.currPlayer);
+    // // Set the next player's turn indicator
+    // view.setTurnIndicator(model.game.currPlayer);
+
+    // view.render(model.game, model.stats);
   });
 }
 
