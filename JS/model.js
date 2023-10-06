@@ -1,15 +1,14 @@
-const initialValue = { moves: [] };
+const initialValue = {
+  currGameMoves: [],
+  history: {
+    currentRoundGames: [],
+    allGames: [],
+  },
+};
 
 export default class Model {
-  #state = {
-    currGameMoves: [],
-    history: {
-      currentRoundGames: [],
-      allGames: [],
-    },
-  };
-
-  constructor(players) {
+  constructor(key, players) {
+    this.liveKey = key;
     this.players = players;
   }
 
@@ -107,7 +106,9 @@ export default class Model {
   }
 
   #getState() {
-    return this.#state;
+    // return this.#state;
+    const item = window.localStorage.getItem(this.liveKey);
+    return item ? JSON.parse(item) : initialValue;
   }
 
   #saveState(newStateOrFunc) {
@@ -128,6 +129,7 @@ export default class Model {
         throw new Error("Invalid argument to saveState");
     }
 
-    this.#state = newState;
+    // this.#state = newState;
+    window.localStorage.setItem(this.liveKey, JSON.stringify(newState));
   }
 }

@@ -107,6 +107,14 @@ export default class View {
     squareEl.replaceChildren(icon);
   }
 
+  initializeMoves(moves) {
+    this.$$.squares.forEach((square) => {
+      const existingMove = moves.find((move) => move.squareId === +square.id);
+
+      if (existingMove) this.handlePlayerMove(square, existingMove.player);
+    });
+  }
+
   openModal(message) {
     this.$.modal.classList.remove("hidden");
     this.$.txt_modal.innerText = message;
